@@ -1,0 +1,24 @@
+{
+    "Gold": 10,
+    "Weapons": [
+        "Dagger"
+    ],
+    "Armour": [
+        "Hood",
+        "Leather Jerkin",
+        "Gloves",
+        "Boots"
+    ],
+    "Potions": [
+        {
+            "Healing": 2
+        },
+        {
+            "Stamina": 2
+        }
+    ],
+    "Quest Items": [
+        "Dungeon Key",
+        "Rogue's Talisman"
+    ]
+}
