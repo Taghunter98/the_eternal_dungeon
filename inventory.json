@@ -1,24 +1,21 @@
 {
     "Gold": 10,
     "Weapons": [
-        "Dagger"
+        "Greatsword"
     ],
     "Armour": [
-        "Hood",
-        "Leather Jerkin",
-        "Gloves",
-        "Boots"
+        "Chestplate",
+        "Helmet",
+        "Gauntlets",
+        "Greaves"
     ],
     "Potions": [
         {
             "Healing": 2
-        },
-        {
-            "Stamina": 2
         }
     ],
     "Quest Items": [
         "Dungeon Key",
-        "Rogue's Talisman"
+        "Warrior's Talisman"
     ]
 }

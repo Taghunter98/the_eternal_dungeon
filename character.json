@@ -1,7 +1,7 @@
 {
-    "Name": "Josh",
-    "Class": "Rogue",
-    "Health": 60,
-    "Stamina": 100,
-    "Magic": 20
+    "Name": "Odysseus",
+    "Class": "Warrior",
+    "Health": 100,
+    "Stamina": 30,
+    "Magic": 10
 }

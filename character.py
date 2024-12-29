@@ -5,7 +5,7 @@ import mechanics
 # Add Strength
 # Add Inteligence
 # Add abilities
-# Add level up function
+# Use key items
 
 def character_creator():
     player_name = character.create_name()
@@ -204,11 +204,12 @@ def display_inventory(player, inventory):
     print("+-------------------------------------------------+")
     print(f"{', '.join(inventory['Quest Items'])[:45]:<45}  ")
     print("+-------------------------------------------------+")
+
+def player_inventory(player, inventory):
+    # Prints out UI for inventory
+    display_inventory(player, inventory)
     print("[1] Use Item   [2] Drop Item   [3] Back to Menu\n")
     
-    inventory_options(player, inventory)
-
-def inventory_options(player, inventory):
     choice = input(mechanics.response)
 
     if choice == "1":  # Choosing to use an item
@@ -268,10 +269,39 @@ def inventory_options(player, inventory):
             
             else:
                 print("Invalid choice. Returning to menu.")
-        else:
-            print("You have no potions to use.")
+                
+        elif choice == "2":
+            print("Which item do you want to use?")
+    
+            # Display items with proper indexing
+            for index, item in enumerate(inventory["Quest Items"], start=1):
+                print(f"[{index}] {item}")
+    
+            # Add option to go back to the menu
+            print(f"[{len(inventory['Quest Items']) + 1}] Back to Menu")
 
-    elif choice == "2":  # Using a quest item (logic can be added here)
+            # Get player choice
+            choice = input(mechanics.response)
+    
+            if choice.isdigit():  # Ensure the input is numeric
+                choice = int(choice)
+                if 1 <= choice <= len(inventory["Quest Items"]):
+                    # Use the chosen quest item
+                    selected_item = inventory["Quest Items"][choice - 1]
+                    print(f"You used {selected_item}.")
+                    return selected_item
+                    # Remove the item after use
+                    # inventory["Quest Items"].remove(selected_item)
+                elif choice == len(inventory["Quest Items"]) + 1:
+                    print("Returning to the menu...")
+                    return
+                else:
+                    mechanics.error("Invalid response.")
+                    return
+        else:
+            mechanics.error("Invalid response. Please enter a number.")
+            
+    elif choice == "2":
         print("Feature not yet implemented.")
     else:
         print("Invalid choice.")

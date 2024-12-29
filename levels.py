@@ -1,18 +1,42 @@
 import mechanics
+import character
 import story
-import the_eternal_dungeon
+
 import random
 
-def level_one(player):
+def level_one(player, inventory):
     print(story.level_1_intro)
     mechanics.dialog_simple("Begin level 1", "Back to menu")
     choice = input(mechanics.response)
     if choice == "1":
-        bridge_encounter(player)
+        dungeon_entrance(player, inventory)
+        mechanics.save_progress("dungeon_entrance")
     else:
         print("Quiting level...")
         return 0
 
+# Locked door
+def dungeon_entrance(player, inventory):
+    print(story.dungeon_door)
+    print("Would you like to check your inventory for a key?")
+    mechanics.dialog_simple("Yes", "No")
+    
+    choice = input(mechanics.response)
+    
+    if choice == "1":
+        dungeon_key = character.player_inventory(player, inventory)  # Get the selected item
+        if dungeon_key == "Dungeon Key":
+            print(story.dungeon_door_success)
+            # Continue the story
+        else:
+            print(story.dungeon_door_failure)
+    elif choice == "2":
+        print("You decide to look around the area for another way...")
+        # Optional: Add exploration logic here
+    else:
+        mechanics.error("Invalid response.")
+    
+    
 # Bridge encounter where player has to cross a bridge
 def bridge_encounter(player):
     print(story.bridge_encounter)

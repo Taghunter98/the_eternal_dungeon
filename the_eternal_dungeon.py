@@ -6,7 +6,7 @@ import story
 
 class MainGame:
     def __init__(self):
-        # Initialize the game
+        # Start the game
         self.start_game()
 
     def start_game(self):
@@ -33,11 +33,11 @@ class MainGame:
             choice = input(mechanics.response)
 
             if choice == "1":
-                character.display_inventory(player, inventory)
+                character.player_inventory(player, inventory)
             elif choice == "2":
                 character.display_character_sheet(player, inventory)
             elif choice == "3":
-                MainGame.continue_story(player, save)
+                MainGame.continue_story(player, inventory, save)
             elif choice == "4":
                 print("Thanks for playing!")
                 break
@@ -65,9 +65,15 @@ class MainGame:
             return 1  # Default to new game
     
     # Function to continue story
-    def continue_story(player, save):
-        if save == "Level 1":
-            levels.level_one(player)
+    level_map = {
+        "Level 1": levels.level_one,
+        "dungeon_entrance": levels.dungeon_entrance,
+    }
+    
+    def continue_story(player, inventory, save):
+        levels = MainGame.level_map
+        if save in levels:
+            levels[save](player, inventory)
         else:
             mechanics.error("No progress found.")
 
