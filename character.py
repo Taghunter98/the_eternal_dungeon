@@ -30,30 +30,45 @@ class character:
         self.health = 0
         self.stamina = 0
         self.magic = 0
+        self.abilities = []
     
     # creates name for character
     def create_name():
-        print("Welcome adventurer, what is thy name?")
+        print("Greetings, traveler. You have journeyed far to reach these lands...")
+        print("Tell me, what name shall echo in the annals of history?")
         name = input(mechanics.response)
+        print(f"Ah, {name}... a name destined for greatness, or perhaps folly.")
         return name
-    
+
     # creates class type based on int input
     def class_type():
-        print("Now to survive here, thou must choose thine class wisely...")
-        print("This is a dangerous world, you must be prepared for anything.")
-        print("I'll show thee the class options, or if thou is already familar, do tell me thine class...")
-        
-        mechanics.dialog_simple("Show me the classes", "I know what I am")
+        print("\nNow, to survive the perils that await, you must choose your path.")
+        print("This realm is fraught with danger, and each choice will shape your destiny.")
+        print("Do you wish to see the available classes, or have you already decided?")
+    
+        mechanics.dialog_simple("Show me the classes", "I know my path")
         option = input(mechanics.response)
-        
+    
         if option == "1":
-            print(class_info_text)
+            print("\nAllow me to introduce the paths you may follow:")
+            print("- [1] Warrior: A fearless fighter with unmatched strength and resilience.")
+            print("- [2] Mage: A master of arcane arts, wielding spells of devastating power.")
+            print("- [3] Rogue: A cunning shadow, striking swiftly and silently.")
+            print("- [4] Cleric: A holy protector, calling upon divine powers to heal and smite.")
+            print("\nChoose wisely, for your decision is final.")
             player_class = int(input(mechanics.response))
             return character.class_options(player_class)
+    
         elif option == "2":
+            print("\nAh, a seasoned adventurer, are we? Then speak your choice:")
             mechanics.dialog_advanced("Warrior", "Mage", "Rogue", "Cleric")
             player_class = int(input(mechanics.response))
             return character.class_options(player_class)
+    
+        else:
+            mechanics.error("I do not understand. Choose wisely.")
+            return class_type()
+
     
     # helper method for class options
     def class_options(option):
@@ -68,53 +83,12 @@ class character:
         else:
             mechanics.error("Incorrect choice option")
             class_type()
-            
-class_info_text = """
-> (1) Warrior
-
-\tStrengths:
-\tHigh health, strong melee attacks, great at absorbing damage.
-\tWeaknesses:
-\tLimited magical ability, relies heavily on physical combat.
-\tAbilities:
-\tShield Bash: Deals damage and stuns the enemy.
-\t\tBattle Cry: Increases attack power temporarily.
-
-> (2) Mage
-
-\tStrengths:
-\tPowerful ranged magical attacks, crowd control, and utility.
-\tWeaknesses:
-\tLow health, vulnerable in close combat.
-\tAbilities:
-\tFireball: A high-damage ranged spell.
-\tArcane Barrier: Reduces incoming damage for a short duration.
-            
-> (3) Rogue
-
-\tStrengths: 
-\tHigh agility, stealth, and critical strike damage.
-\tWeaknesses: 
-\tLow defense, relies on timing and positioning.
-\tAbilities:
-\tBackstab: Deals massive damage when attacking from behind.
-\tVanish: Temporarily become invisible to escape or reposition.
-
-> (4) Cleric
-
-\tStrengths: 
-\tHealing, buffs, and decent melee combat.
-\tWeaknesses: 
-\tModerate damage output, relies on managing spells effectively.
-\tAbilities:
-\tHeal: Restores health to self or allies.
-\tDivine Smite: Deals holy damage to enemies.
-"""
 
 def warrior_class(player):
     player.health = 100
     player.stamina = 30
     player.magic = 10
+    player.abilities = ["Shield Bash", "Battle Cry"]
     
     # Update inventory
     inventory["Gold"] += 10
@@ -127,6 +101,7 @@ def mage_class(player):
     player.health = 30
     player.stamina = 20
     player.magic = 100
+    player.abilities = ["Fireball", "Arcane Barrier"]
     
     # Update inventory
     inventory["Gold"] += 10
@@ -139,6 +114,7 @@ def rogue_class(player):
     player.health = 60
     player.stamina = 100
     player.magic = 20
+    player.abilities = ["Backstab", "Vanish"]
     
     # Update inventory
     inventory["Gold"] += 10
@@ -151,6 +127,7 @@ def cleric_class(player):
     player.health = 70
     player.stamina = 50
     player.magic = 80
+    player.abilities = ["Heal", "Divine Smite"]
     
     # Update inventory
     inventory["Gold"] += 10

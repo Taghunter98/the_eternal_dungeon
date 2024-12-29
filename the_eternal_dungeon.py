@@ -12,7 +12,16 @@ class MainGame:
     def start_game(self):
         # Load save if found
         if MainGame.check_save() == 1:
-            MainGame.create_character()
+            # New game created if no save
+            player = MainGame.create_character()
+            inventory = character.inventory
+            mechanics.save_character(player) 
+            mechanics.save_inventory(inventory) 
+            save = "Level 1"
+            print("Your journey begins!")
+            
+            # Main game loop
+            self.game_loop(player, inventory, save)
         else:
             print("Save found")
             player = mechanics.load_character()
@@ -22,6 +31,7 @@ class MainGame:
             print(story.title_card)
             print(f"Welcome back adventurer {player.character_name}!")
             print(f"You are currently on {save}.")
+            
             # Main game loop
             self.game_loop(player, inventory, save)
 
@@ -46,7 +56,6 @@ class MainGame:
     
     # Character creation function
     def create_character():
-    # Create a player character
         player = character.character_creator()
         mechanics.save_character(player)
         mechanics.save_inventory(character.inventory)

@@ -33,7 +33,8 @@ def save_character(player):
         "Class": player.character_class,
         "Health": player.health,
         "Stamina": player.stamina,
-        "Magic": player.magic
+        "Magic": player.magic,
+        "Abilities": player.abilities
     }
     
     with open("character.json", "w") as f:
@@ -65,6 +66,7 @@ def load_character():
             player.health = data["Health"] 
             player.stamina = data["Stamina"] 
             player.magic = data["Magic"]
+            player.abilities = data["Abilities"]
             
             return player
     except (FileNotFoundError, KeyError, json.JSONDecodeError):
@@ -91,20 +93,3 @@ def load_progress():
             return json.loads(content)
     except FileNotFoundError:
         return None
-
-
-
-# Level logic
-def continue_journey(message, player, inventory):
-    save_game(player, inventory)
-    print(message)
-    dialog_simple("Continue Journey", "Inventory")
-    choice = input(response)
-    if choice == "1":
-        return True
-    elif choice == "2":
-        print("Returning to menu.")
-        return
-    else:
-        error("Invalid response.")
-        continue_journey(message, player, inventory)
