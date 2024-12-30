@@ -1,7 +1,7 @@
 {
     "Name": "Josh",
     "Class": "Warrior",
-    "Health": 100,
+    "Health": 140,
     "Stamina": 30,
     "Magic": 10,
     "Abilities": [

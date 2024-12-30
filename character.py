@@ -5,7 +5,7 @@ import mechanics
 # Add Strength
 # Add Inteligence
 # Add abilities
-# Use key items
+# Battle logic
 
 def character_creator():
     player_name = character.create_name()
@@ -139,12 +139,13 @@ def cleric_class(player):
 
 # Inventory
 
-inventory = {"Gold": 0,
-             "Weapons": [],
-             "Armour": [],
-             "Potions": [],
-             "Quest Items": []
-            }
+inventory = {
+    "Gold": 0,
+    "Weapons": [],
+    "Armour": [],
+    "Potions": [],
+    "Quest Items": []
+}
 
 def display_inventory(player, inventory):
     print("+-------------------------------------------------+")
@@ -220,9 +221,13 @@ def player_inventory(player, inventory):
                             potion["Magic"] -= 1
                             print("You used a Magic Potion. Magic restored by 15.")
                             mechanics.save_game(player, inventory)
+                            mechanics.sleep(1)
+                            print(mechanics.return_to_menu)
                             break
                         else:
                             print("No Magic Potions left!")
+                            mechanics.sleep(1)
+                            print(mechanics.return_to_menu)
                             break
 
             # Use Stamina Potion
@@ -234,21 +239,25 @@ def player_inventory(player, inventory):
                             potion["Stamina"] -= 1
                             print("You used a Stamina Potion. Stamina restored by 10.")
                             mechanics.save_game(player, inventory)
+                            mechanics.sleep(1)
+                            print(mechanics.return_to_menu)
                             break
                         else:
                             print("No Stamina Potions left!")
+                            mechanics.sleep(1)
+                            print(mechanics.return_to_menu)
                             break
 
             # Back to menu
             elif potion_choice == "4":
-                print("Returning to menu.")
+                print(mechanics.return_to_menu)
                 return
             
             else:
-                print("Invalid choice. Returning to menu.")
+                print("Invalid choice. ", mechanics.return_to_menu)
                 
         elif choice == "2":
-            print("Which item do you want to use?")
+            print("\nWhich item do you want to use?")
     
             # Display items with proper indexing
             for index, item in enumerate(inventory["Quest Items"], start=1):
@@ -270,18 +279,29 @@ def player_inventory(player, inventory):
                     # Remove the item after use
                     # inventory["Quest Items"].remove(selected_item)
                 elif choice == len(inventory["Quest Items"]) + 1:
-                    print("Returning to the menu...")
+                    mechanics.sleep(1)
+                    print(mechanics.return_to_menu)
                     return
                 else:
                     mechanics.error("Invalid response.")
+                    mechanics.sleep(1)
+                    print(mechanics.return_to_menu)
                     return
         else:
             mechanics.error("Invalid response. Please enter a number.")
-            
+            mechanics.sleep(1)
+            print(mechanics.return_to_menu)
+            return
     elif choice == "2":
         print("Feature not yet implemented.")
+        mechanics.sleep(1)
+        print(mechanics.return_to_menu)
+        return
     else:
         print("Invalid choice.")
+        mechanics.sleep(1)
+        print(mechanics.return_to_menu)
+        return
                         
                         
                         
@@ -296,8 +316,13 @@ def display_character_sheet(player, inventory):
     print(f" Class: {player.character_class:<40}")
     print("+----------------+----------------+---------------+")
     print(f" Health: {player.health:<7}   Stamina: {player.stamina:<7}   Magic: {player.magic:<7}")
+    print("+----------------+----------------+---------------+")
+    print(f" Abilities:")
     print("+-------------------------------------------------+")
-    print("          [1] Level Up    [2] Back to Menu\n       ")
+    for ability in player.abilities:
+        print(f"- {ability}")
+    print("+-------------------------------------------------+")
+    print("[1] Level Up   [2] Back to Menu\n                  ")
     character_sheet_options(player, inventory)
 
 def character_sheet_options(player, inventory):
@@ -316,23 +341,41 @@ def character_sheet_options(player, inventory):
             inventory["Gold"] -= gold_required
             print(f"Your Health has increased to {player.health}!")
             mechanics.save_game(player, inventory)
+            mechanics.sleep(1)
+            print(mechanics.return_to_menu)
+            
         elif choice == "2":  # Level up Stamina
             player.stamina += 10
             inventory["Gold"] -= gold_required
             print(f"Your Stamina has increased to {player.stamina}!")
             mechanics.save_game(player, inventory)
+            mechanics.sleep(1)
+            print(mechanics.return_to_menu)
+
         elif choice == "3":  # Level up Magic
             player.magic += 10
             inventory["Gold"] -= gold_required
             print(f"Your Magic has increased to {player.magic}!")
             mechanics.save_game(player, inventory)
+            mechanics.sleep(1)
+            print(mechanics.return_to_menu)
+
         elif choice == "4":  # Back to Menu
-            print("Returning to menu.")
+            mechanics.sleep(1)
+            print(mechanics.return_to_menu)
             return
         else:
-            print("Invalid choice! Returning to menu.")
+            print("Invalid choice!")
+            mechanics.sleep(1)
+            print(mechanics.return_to_menu)
+    elif choice == "2":
+        mechanics.sleep(1)
+        print(mechanics.return_to_menu)
+
     else:
-        print("Not enough gold to level up!\nReturning to Menu...")
+        print("Not enough gold to level up!")
+        mechanics.sleep(1)
+        print(mechanics.return_to_menu)
         return
 
 def check_current_level():
