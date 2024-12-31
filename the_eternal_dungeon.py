@@ -21,7 +21,8 @@ class MainGame:
             print("No save file found. Starting a new adventure!")
             player = character.character_creator()
             inventory = character.inventory
-
+            mechanics.save_game(player, inventory)
+            
             # Start main game loop
             self.game_loop(player, inventory, save) 
             
@@ -92,6 +93,7 @@ class MainGame:
     level_map = {
         "Level 1": levels.level_one,
         "dungeon_entrance": levels.dungeon_entrance,
+        "test": levels.battle
     }
     
     def continue_story(player, inventory, save):

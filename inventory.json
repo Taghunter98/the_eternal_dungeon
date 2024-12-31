@@ -1,25 +1,21 @@
 {
     "Gold": 10,
     "Weapons": [
-        "Staff",
-        "Dagger"
+        "Greatsword"
     ],
     "Armour": [
-        "Mage Hat",
-        "Mage Robes",
-        "Mage Gloves",
-        "Mage Boots"
+        "Chestplate",
+        "Helmet",
+        "Gauntlets",
+        "Greaves"
     ],
     "Potions": [
         {
-            "Healing": 1
-        },
-        {
-            "Magic": 2
+            "Healing": 2
         }
     ],
     "Quest Items": [
         "Dungeon Key",
-        "Mages's Talisman"
+        "Warrior's Talisman"
     ]
 }

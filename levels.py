@@ -1,6 +1,7 @@
 import mechanics
 import character
 import story
+import enemy
 
 import random
 
@@ -13,6 +14,8 @@ def level_one(player, inventory):
         mechanics.save_progress("dungeon_entrance")
         mechanics.next_event()
         dungeon_entrance(player, inventory)
+        mechanics.save_progress("test")
+        mechanics.battle(player.inventory)
     else:
         print("Quiting level...")
         mechanics.sleep(1)
@@ -72,3 +75,7 @@ def bridge_encounter(player):
     else:
         print("\nIndecision is dangerous here. You must choose a path!")
         bridge_encounter(player)  # Restart the encounter
+        
+def battle(player, inventory):
+    mechanics.battle(player, inventory)
+    

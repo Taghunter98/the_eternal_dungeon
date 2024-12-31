@@ -1,6 +1,7 @@
 import json
 import character
 import random
+import enemy
 
 # Dialog
 
@@ -141,7 +142,7 @@ def dice():
     return number
 
 def roll_die():
-    print("\nRoll the Die!")
+    print("\nRoll the Die!\n")
     print("> [r] Roll")
     
     roll = input(response)
@@ -150,12 +151,12 @@ def roll_die():
     if roll == "r":
         number = dice()
         sleep(1)
-        print(f"You rolled {number}!\n")
+        print(f"\nYou rolled {number}!\n")
         # Check roll strength
         if number >= 5:
-            print("Critical success!")
+            print("Critical success!\n")
         elif number <= 3:
-            print("Critical faluire!")
+            print("Critical failure!\n")
         return number
     else:
         print(error("Unrecognised roll."))
@@ -167,18 +168,85 @@ def roll_die():
 
 
 # Battles
+
 def battle(player, inventory):
+    print("\nYou have encountered an enemy!")
     dialog_simple("Ready yourself for battle!", "Try to flee")
     choice = input(response)
 
     # Check if choice is valid
     if choice == "1":
-        # Battle
-        print()
+        # Select opponent
+        entity = select_enemy()
+        turn = 0
+        while entity.health > 0:
+            turn += 1
+            print(f"Turn {turn}")
+            print(" ")
+            sleep(0.5)
+            print(f"{entity.name}'s Turn")
+            sleep(0.5)
+            damage = enemy.attack_amount(entity.name)
+            player.health -= damage
+            print(f"You took {damage} damage!")
+            print(f"You have {player.health} health left.")
+            sleep(0.5)
+            player_damage = player_attack()
+            print(f"{entity.name} took {damage} damage!")
+            entity.health -= player_damage
+            print(f"{entity.name} has {entity.health} health left.")
+    
+            
+            for i in range(0, 5):
+                print(">")
+        
+        if entity.health <= 0:
+            print(f"You killed the {entity.name}!")
+        
     elif choice == "2":
         print("")
 
-
+def player_attack():
+    
+    print("\nYour Turn")
+    
+    dialog_simple("Main attack", "Use an ability")
+    choice = input(response)
+    
+    if choice == "1":
+        damage = roll_die()
+        player_base_damage = 10
+        
+        if damage > 2:
+            return player_base_damage
+    
+        elif damage == 6:
+            print("Critical hit!")
+            return player_base_damage + 5
+        else:
+            print("Enemy dodged the attack!")
+            return 0
+    elif choice == "2":
+        print("Feature coming soon...")
+        return 0
+    else:
+        error("Invalid input.")
+        return
+    
+def select_enemy():
+    # Select enemy at random
+    #TODO create this as dictionary
+    enemies = ["Goblin", "Ork", "Skeleton"]
+    next_enemy = random.randint(0,len(enemies))
+    
+    if next_enemy == 0:
+        return enemy.enemy_check("Goblin")
+    elif next_enemy == 1:
+        return enemy.enemy_check("Ork")
+    elif next_enemy == 2:
+        return enemy.enemy_check("Skeleton")
+    else:
+        error("Unable to find enemy.")
 
 # Animation
 import time

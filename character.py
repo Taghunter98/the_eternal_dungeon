@@ -387,3 +387,22 @@ def check_current_level():
         return 60
     else:
         return 100 # default cost for higher levels for now
+
+# Check character health
+def check_health(player, inventory):
+    if player.health <= 0:
+        print("You died!")
+        print("You will respawn at the last save point...")
+        if player.class_type == "Warrior":
+            warrior_class(player)
+        elif player.class_type == "Mage":
+            mage_class(player)
+        elif player.class_type == "Rogue":
+            rogue_class(player)
+        elif player.player_class == "Cleric":
+            cleric_class(player)
+    
+    # Save game
+    print("Creating new save file...")
+    mechanics.save_game(player, inventory)
+    
