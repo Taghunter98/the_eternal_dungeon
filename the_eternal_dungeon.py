@@ -16,10 +16,15 @@ class MainGame:
         # Call check_save() once and reuse the result
         save = MainGame.check_save()  
 
-        if save == "":
+        if save == "Level 1":
             # Start a new game
             print("No save file found. Starting a new adventure!")
-            character.character_creator() 
+            player = character.character_creator()
+            inventory = character.inventory
+
+            # Start main game loop
+            self.game_loop(player, inventory, save) 
+            
         else:
             # Load existing progress
             print("Save found!")

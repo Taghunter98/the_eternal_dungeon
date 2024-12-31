@@ -163,8 +163,20 @@ def roll_die():
     
     print("\n")
 
-# Battles
 
+
+
+# Battles
+def battle(player, inventory):
+    dialog_simple("Ready yourself for battle!", "Try to flee")
+    choice = input(response)
+
+    # Check if choice is valid
+    if choice == "1":
+        # Battle
+        print()
+    elif choice == "2":
+        print("")
 
 
 

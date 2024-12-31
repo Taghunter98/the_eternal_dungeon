@@ -1,11 +1,11 @@
 {
-    "Name": "Josh",
-    "Class": "Warrior",
-    "Health": 140,
-    "Stamina": 30,
-    "Magic": 10,
+    "Name": "Beth",
+    "Class": "Mage",
+    "Health": 35,
+    "Stamina": 20,
+    "Magic": 100,
     "Abilities": [
-        "Shield Bash",
-        "Battle Cry"
+        "Fireball",
+        "Arcane Barrier"
     ]
 }
