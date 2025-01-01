@@ -1,4 +1,5 @@
 import mechanics
+import the_eternal_dungeon
 
 # TODO
 # Add dexterity
@@ -28,6 +29,7 @@ class character:
         self.character_name = character_name
         self.character_class = character_class
         self.health = 0
+        self.base_health = 0
         self.stamina = 0
         self.magic = 0
         self.abilities = []
@@ -86,6 +88,7 @@ class character:
 
 def warrior_class(player):
     player.health = 100
+    player.base_health = 100
     player.stamina = 30
     player.magic = 10
     player.abilities = ["Shield Bash", "Battle Cry"]
@@ -99,6 +102,7 @@ def warrior_class(player):
 
 def mage_class(player):
     player.health = 30
+    player.base_health = 30
     player.stamina = 20
     player.magic = 100
     player.abilities = ["Fireball", "Arcane Barrier"]
@@ -112,6 +116,7 @@ def mage_class(player):
 
 def rogue_class(player):
     player.health = 60
+    player.base_health = 60
     player.stamina = 100
     player.magic = 20
     player.abilities = ["Backstab", "Vanish"]
@@ -125,6 +130,7 @@ def rogue_class(player):
 
 def cleric_class(player):
     player.health = 70
+    player.base_health = 70
     player.stamina = 50
     player.magic = 80
     player.abilities = ["Heal", "Divine Smite"]
@@ -180,13 +186,13 @@ def display_inventory(player, inventory):
     print("+----------------+----------------+---------------+")
     print("| Quest Items                                     |")
     print("+-------------------------------------------------+")
-    print(f"{', '.join(inventory['Quest Items'])[:45]:<45}  ")
+    print(f" {', '.join(inventory['Quest Items'])[:45]:<45}  ")
     print("+-------------------------------------------------+")
 
 def player_inventory(player, inventory):
     # Prints out UI for inventory
     display_inventory(player, inventory)
-    print("[1] Use Item   [2] Drop Item   [3] Back to Menu\n")
+    print("[1] Use Item   [2] Back to Menu\n")
     
     choice = input(mechanics.response)
 
@@ -269,7 +275,7 @@ def player_inventory(player, inventory):
             # Get player choice
             choice = input(mechanics.response)
     
-            if choice.isdigit():  # Ensure the input is numeric
+            if choice.isdigit(): 
                 choice = int(choice)
                 if 1 <= choice <= len(inventory["Quest Items"]):
                     # Use the chosen quest item
@@ -277,7 +283,6 @@ def player_inventory(player, inventory):
                     print(f"You used {selected_item}.")
                     return selected_item
                     # Remove the item after use
-                    # inventory["Quest Items"].remove(selected_item)
                 elif choice == len(inventory["Quest Items"]) + 1:
                     mechanics.sleep(1)
                     print(mechanics.return_to_menu)
@@ -293,9 +298,8 @@ def player_inventory(player, inventory):
             print(mechanics.return_to_menu)
             return
     elif choice == "2":
-        print("Feature not yet implemented.")
-        mechanics.sleep(1)
         print(mechanics.return_to_menu)
+        mechanics.sleep(1)
         return
     else:
         print("Invalid choice.")
@@ -391,18 +395,17 @@ def check_current_level():
 # Check character health
 def check_health(player, inventory):
     if player.health <= 0:
-        print("You died!")
-        print("You will respawn at the last save point...")
-        if player.class_type == "Warrior":
-            warrior_class(player)
-        elif player.class_type == "Mage":
-            mage_class(player)
-        elif player.class_type == "Rogue":
-            rogue_class(player)
-        elif player.player_class == "Cleric":
-            cleric_class(player)
-    
-    # Save game
-    print("Creating new save file...")
-    mechanics.save_game(player, inventory)
+        print("\nYou died!")
+        print("\nYou will respawn at the last save point...")
+        print("You have lost all your Gold!")
+        inventory["Gold"] = 0
+        
+        # Save game
+        print("Creating new save file...")
+        player.health += player.base_health
+        mechanics.save_game(player, inventory)
+        mechanics.sleep(1)
+        the_eternal_dungeon.MainGame.game_over()
+    else:
+        return False
     

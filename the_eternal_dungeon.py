@@ -3,6 +3,7 @@ import character
 import mechanics
 import levels
 import story
+import sys
 
 class MainGame:
     def __init__(self):
@@ -37,7 +38,7 @@ class MainGame:
             
             # Resume game with stats
             mechanics.print_with_animation(story.title_card)
-            print(f"Welcome back, adventurer {player.    character_name}!")
+            print(f"Welcome back, adventurer {player.character_name}!")
             print(f"You are currently on {save}.")
             mechanics.sleep(1)
 
@@ -93,7 +94,7 @@ class MainGame:
     level_map = {
         "Level 1": levels.level_one,
         "dungeon_entrance": levels.dungeon_entrance,
-        "test": levels.battle
+        "first_battle": levels.battle_one
     }
     
     def continue_story(player, inventory, save):
@@ -103,6 +104,13 @@ class MainGame:
         else:
             mechanics.error("No progress found.")
             mechanics.sleep(1)
+    
+    def game_over():
+        print("Game Over!")
+        mechanics.sleep(0.5)
+        print("Quitting game...")
+        mechanics.sleep(1)
+        sys.exit()
 
 # Start the game
 if __name__ == "__main__":

@@ -12,10 +12,7 @@ def level_one(player, inventory):
     
     if choice == "1":
         mechanics.save_progress("dungeon_entrance")
-        mechanics.next_event()
         dungeon_entrance(player, inventory)
-        mechanics.save_progress("test")
-        mechanics.battle(player.inventory)
     else:
         print("Quiting level...")
         mechanics.sleep(1)
@@ -34,15 +31,18 @@ def dungeon_entrance(player, inventory):
         dungeon_key = character.player_inventory(player, inventory)  # Get the selected item
         if dungeon_key == "Dungeon Key":
             mechanics.print_with_animation(story.dungeon_door_success)
-            # Continue the story
-            bridge_encounter(player)
+            mechanics.save_progress("first_battle")
+            first_battle(player, inventory) # Continue story
+            return
         else:
             mechanics.print_with_animation(story.dungeon_door_failure)
+            return
     elif choice == "2":
         print("You decide to look around the area for another way...")
         # Optional: Add exploration logic here
     else:
         mechanics.error("Invalid response.")
+        return
     
     
 # Bridge encounter where player has to cross a bridge
@@ -76,6 +76,44 @@ def bridge_encounter(player):
         print("\nIndecision is dangerous here. You must choose a path!")
         bridge_encounter(player)  # Restart the encounter
         
-def battle(player, inventory):
+
+# Level 1 Battle
+def battle_one(player, inventory):
+    mechanics.print_with_animation(story.first_battle)
     mechanics.battle(player, inventory)
+    mechanics.battle(player, inventory)
+    mechanics.battle(player, inventory)
+    mechanics.print_with_animation(story.battle_victory)
     
+    # Post battle chest reward
+    mechanics.dialog_simple("Next Level", "You look around and notice a chest nearby. What will you do?")
+    choice = input(mechanics.response)
+
+    if choice == "1":
+        print("\nYou decide to leave the chest behind and venture deeper into the Eternal Dungeon...")
+        mechanics.save_progress("Level 2")
+        return
+    elif choice == "2":
+        print("\nYou approach the chest and notice it is locked. Perhaps you can break it open?")
+        break_chance = mechanics.dice()
+
+        exit_text = "\nWith no other options, you leave the room and continue deeper into the dungeon..."
+        
+        if break_chance > 4:
+            print("\nWith a mighty strike, you shatter the lock and open the chest!")
+            print("Inside, you find 50 Gold!")
+            inventory["Gold"] += 50  # Properly updates the inventory
+            print(exit_text)
+            mechanics.save_progress("Level 2")
+            mechanics.sleep(2)
+            return
+        else:
+            print("\nYou strike the lock with all your strength, but it refuses to budge...")
+            print(exit_text)
+            mechanics.save_progress("Level 2")
+            mechanics.sleep(2)
+            return
+    else:
+        print("\nIndecision grips you. Time waits for no one, and you press onward...")
+        mechanics.save_progress("Level 2")
+        return
