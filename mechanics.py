@@ -41,9 +41,11 @@ def save_character(player):
         "Class": player.character_class,
         "Health": player.health,
         "Base Health": player.base_health,
+        "Base Damage": player.base_damage,
         "Stamina": player.stamina,
         "Magic": player.magic,
-        "Abilities": player.abilities
+        "Abilities": player.abilities,
+        "Ability Damage": player.ability_damage
     }
     
     with open("character.json", "w") as f:
@@ -65,14 +67,12 @@ def load_character():
     try:
         with open(file, "r") as f:
             content = f.read().strip()
-            print(f"Reading {file}...")
-            sleep(0.5)
+            # print(f"Reading {file}...")
             if not content:  # Check if the file is empty
                 error("File is empty.")
                 sleep(0.5)
                 return None
             data = json.loads(content)  # Parse the JSON content
-            sleep(0.5)
             player = character.character(
                 data["Name"], 
                 data["Class"], 
@@ -81,9 +81,11 @@ def load_character():
             # Load player info
             player.health = data["Health"]
             player.base_health = data["Base Health"]
+            player.base_damage = data["Base Damage"]
             player.stamina = data["Stamina"] 
             player.magic = data["Magic"]
             player.abilities = data["Abilities"]
+            player.ability_damage = data["Ability Damage"]
             
             sleep(1)
             return player
@@ -96,15 +98,12 @@ def load_inventory():
     try:
         with open(file, "r") as f:
             content = f.read().strip()
-            print(f"Reading {file}...")
-            sleep(0.5)
+            # print(f"Reading {file}...")
             if not content:
                 error("File is empty.")
                 return {"Gold": 0, "Weapons": [], "Armour": [], "Potions": [], "Quest Items": []}
-            print("Loading Inventory...")
-            sleep(0.5)
-            print("Inventory loaded successfully!\n")
-            sleep(1)
+            # print("Loading Inventory...")
+            # print("Inventory loaded successfully!\n")
             return json.loads(content)
     except FileNotFoundError:
         return {"Gold": 0, "Weapons": [], "Armour": [], "Potions": [], "Quest Items": []}
@@ -115,18 +114,13 @@ def load_progress():
     try:
         with open(file, "r") as f:
             content = f.read().strip()
-            print(f"Reading {file}...")
-            sleep(1)
+            # print(f"Reading {file}...")
             if not content:
-                error("File is empty. Starting a new game.")
-                return None
+                save_progress("Level 1")
+                return 
             sleep(0.5)
-            print("Progress loaded successfully!\n")
-            sleep(1)
+            # print("Progress loaded successfully!\n")
             return json.loads(content)
-    except FileNotFoundError:
-        print("Save file not found. Starting a new game...")
-        return None
     except json.JSONDecodeError:
         print("Error reading save file. It may be corrupted.")
         return None
@@ -187,7 +181,8 @@ def battle_logic(choice, player, inventory):
     # Check if choice is valid
     if choice == "1":
         # Select opponent
-        entity = select_enemy()
+        get_enemy = select_enemy()
+        entity = enemy.enemy_check(get_enemy)
         turn = 0
         
         # Main battle logic
@@ -253,44 +248,77 @@ def player_attack(player):
     print_player_title(player)
     sleep(1)
     print("Choose Your Attack Type")
-    dialog_simple("Strike with your main weapon", "Unleash a powerful ability")
+    dialog_simple("Strike with your main weapon", f"Unleash a powerful ability [{player.ability_counter} available]")
     choice = input(response)
     
     if choice == "1":
         damage = dice()
         print(f"\nYou roll {damage}.")
-        player_base_damage = 10
+        player_base_damage = player.base_damage
         
         if damage > 2:
             return player_base_damage
     
         elif damage == 6:
             print("\nCritical hit!")
-            return player_base_damage + 5
+            return (player_base_damage + 5)
         else:
             print("\nEnemy dodged the attack!")
             return 0
     elif choice == "2":
-        print("Feature coming soon...")
-        return 0
+        if player.ability_counter == 0:
+            print("You are out of abilities!")
+            return 0
+        else:
+            damage = ability_attack(player)
+            print(f"\nYou use a powerful ability dealing {damage} damage!")
+            player.ability_counter -= 1
+            return damage
     else:
         error("Invalid input.")
         print("\nYou stand still and waste your turn...")
         return 0
-   
+
+def ability_attack(player):
+    print("\nWhich ability would you like to use?")
+    # Display all abilities to player
+    abilities = player.abilities
+    damage = player.ability_damage
+    
+    for ability in abilities:
+        print(f"[{abilities.index(ability) + 1}] {ability}")
+    
+    choice = input(response)
+    
+    if choice == "1":
+        return damage
+    elif choice == "2":
+        return damage
+    else:
+        error("Invalid input.")
+        ability_attack(player)
     
 def select_enemy():
     # Select enemy at random
-    #TODO create this as dictionary
-    enemies = ["Goblin", "Ork", "Skeleton"]
-    next_enemy = random.randint(1,(len(enemies))) # Get regular number
+    enemies = {
+        1: "Goblin",
+        2: "Ork",
+        3: "Skeleton",
+        4: "Troll"
+    }
     
-    if next_enemy == 1:
-        return enemy.enemy_check("Goblin")
-    elif next_enemy == 2:
-        return enemy.enemy_check("Ork")
-    elif next_enemy == 3:
-        return enemy.enemy_check("Skeleton")
+    save = load_progress()
+    
+    next_enemy = 1
+    
+    if save in  ["first_battle", "Level 2"]:
+        next_enemy = random.randint(1,3)
+    elif save == "level_two_boss":
+        next_enemy = 4
+    
+    if next_enemy in enemies:
+        print(enemies.get(next_enemy)) # debug
+        return enemies.get(next_enemy)
     else:
         error("Unable to find enemy.")
 

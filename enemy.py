@@ -1,14 +1,12 @@
 import mechanics
 
 class enemy:
-    def __init__(self, name, health, damage, crit_damage):
+    def __init__(self, name, health, damage, crit_damage, gold):
         self.name = name
         self.health = health
         self.damage = damage
         self.crit_damage = crit_damage
-        self.gold = 0
-        #TODO self.attack_power = attack_power
-        #TODO self.abilities = abilities
+        self.gold = gold
     
 def attack(entity):
         roll = mechanics.dice()
@@ -38,17 +36,14 @@ def attack_amount(entity_name):
         return 0
     
 def enemy_check(entity):
-    if entity == "Goblin":
-        entity = enemy("Goblin", 30, 5, 10)
-        entity.gold = 20
-        return entity
-    elif entity == "Ork":
-        entity = enemy("Ork", 50, 10, 15)
-        entity.gold = 35
-        return entity
-    elif entity == "Skeleton":
-        entity = enemy("Skeleton", 20, 5, 15)
-        entity.gold = 10
-        return entity
+    # All enemies
+    enemies = {
+        "Goblin": enemy("Goblin", 30, 5, 10, 25),
+        "Ork": enemy("Ork", 50, 10, 15, 50),
+        "Skeleton": enemy("Skeleton", 20, 5, 15, 25),
+        "Troll": enemy("Troll", 100, 15, 20, 150)
+    }
+    if entity in enemies:
+        return enemies.get(entity)
     else:
         mechanics.error("Can't create enemy.")

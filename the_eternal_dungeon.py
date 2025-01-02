@@ -49,6 +49,8 @@ class MainGame:
         while True:
             mechanics.sleep(2)
             mechanics.print_spacing()
+            # Get save
+            save = mechanics.load_progress()
             # Example game loop to handle player actions
             mechanics.dialog_advanced("View Inventory", "View Character Sheet", "Continue Quest", "Exit Game")
 
@@ -94,7 +96,10 @@ class MainGame:
     level_map = {
         "Level 1": levels.level_one,
         "dungeon_entrance": levels.dungeon_entrance,
-        "first_battle": levels.battle_one
+        "first_battle": levels.battle_one,
+        "Level 2": levels.level_two,
+        "level_two_boss": levels.level_two_boss,
+        "Level 3": levels.level_three
     }
     
     def continue_story(player, inventory, save):

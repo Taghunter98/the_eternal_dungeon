@@ -12,7 +12,7 @@ def character_creator():
     player_name = character.create_name()
     player_class = character.class_type()
     player = character(player_name, player_class)
-    print(f"Welcome adventurer {player.character_name}.\nYou are a {player.character_class}")
+    print(f"\n\nWelcome adventurer {player.character_name}.\nYou are a {player.character_class}")
     if player_class == "Warrior":
         warrior_class(player)
     elif player_class == "Mage":
@@ -30,9 +30,12 @@ class character:
         self.character_class = character_class
         self.health = 0
         self.base_health = 0
+        self.base_damage = 10
         self.stamina = 0
         self.magic = 0
         self.abilities = []
+        self.ability_damage = 0
+        self.ability_counter = 2
     
     # creates name for character
     def create_name():
@@ -69,7 +72,7 @@ class character:
     
         else:
             mechanics.error("I do not understand. Choose wisely.")
-            return class_type()
+            character.class_type()
 
     
     # helper method for class options
@@ -91,6 +94,7 @@ def warrior_class(player):
     player.base_health = 100
     player.stamina = 30
     player.magic = 10
+    player.ability_damage = 15
     player.abilities = ["Shield Bash", "Battle Cry"]
     
     # Update inventory
@@ -105,6 +109,7 @@ def mage_class(player):
     player.base_health = 30
     player.stamina = 20
     player.magic = 100
+    player.ability_damage = 30 # Mage starts with high damage
     player.abilities = ["Fireball", "Arcane Barrier"]
     
     # Update inventory
@@ -119,6 +124,7 @@ def rogue_class(player):
     player.base_health = 60
     player.stamina = 100
     player.magic = 20
+    player.ability_damage = 20
     player.abilities = ["Backstab", "Vanish"]
     
     # Update inventory
@@ -133,6 +139,7 @@ def cleric_class(player):
     player.base_health = 70
     player.stamina = 50
     player.magic = 80
+    player.ability_damage = 25
     player.abilities = ["Heal", "Divine Smite"]
     
     # Update inventory
@@ -209,7 +216,7 @@ def player_inventory(player, inventory):
                 for potion in inventory["Potions"]:
                     if isinstance(potion, dict) and "Healing" in potion:
                         if potion["Healing"] > 0:
-                            player.health += 20
+                            player.base_health += 20
                             potion["Healing"] -= 1
                             print("You used a Healing Potion. Health restored by 20.")
                             mechanics.save_game(player, inventory)
@@ -352,6 +359,16 @@ def character_sheet_options(player, inventory):
             player.stamina += 10
             inventory["Gold"] -= gold_required
             print(f"Your Stamina has increased to {player.stamina}!")
+            
+            # Calculate damage
+            damage = 0
+            if player.stamina < 50:
+                damage = 5
+            elif player.stamina > 50 and player.stamina < 100:
+                damage = 10
+            
+            print(f"This new strength gives you + {damage} base damage")
+            player.base_damage += damage
             mechanics.save_game(player, inventory)
             mechanics.sleep(1)
             print(mechanics.return_to_menu)
@@ -360,6 +377,10 @@ def character_sheet_options(player, inventory):
             player.magic += 10
             inventory["Gold"] -= gold_required
             print(f"Your Magic has increased to {player.magic}!")
+            print("You are now able to field an extra ability!")
+            player.ability_damage += 10
+            print(f"Ability damage has increased to {player.ability_damage}")
+            player.ability_counter += 1
             mechanics.save_game(player, inventory)
             mechanics.sleep(1)
             print(mechanics.return_to_menu)

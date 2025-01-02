@@ -84,3 +84,49 @@ your brow and steady your weapon, feeling a surge of triumph. Though the battle
 was hard-fought, you know this is only the beginning. The Eternal Dungeon still 
 holds countless dangers ahead—but for now, you stand victorious.
 """
+
+level_2_intro = """
+The air grows colder and heavier as you descend deeper into the Eternal Dungeon. 
+The faint whispers from above are replaced by an oppressive silence, broken only 
+by the occasional drip of water echoing through the stone halls. The walls here 
+seem more ancient, etched with cryptic markings that glow faintly, as though they 
+watch your every move. 
+
+You grip your weapon tightly, knowing the dangers ahead will be far greater than 
+before. These depths are home to deadlier creatures, born of darkness and fury, 
+each eager to test your resolve. Yet, with every step forward, you feel the pull of 
+something greater—a promise of power, treasure, and secrets long buried. 
+
+Steeling your nerves, you press on. The second level of the Eternal Dungeon awaits, 
+and only the brave or the foolish dare to tread here.
+"""
+troll_boss_intro = """
+The ground beneath your feet trembles as a low, guttural growl echoes through the 
+chamber. You step cautiously into the vast, dimly lit room, the air thick with the 
+stench of rot and damp earth. Before you stands a hulking figure, its towering form 
+shrouded in shadow. As it lumbers forward, the torchlight reveals its grotesque features— 
+thick, mottled skin, jagged tusks, and eyes that burn with primal fury.
+
+This is no ordinary foe; this is the Troll Warlord, the dungeon’s guardian and a 
+merciless predator. In one massive hand, it clutches a gnarled club, its surface slick 
+with dried blood. The troll lets out a deafening roar, the sound reverberating off the 
+stone walls, as it beats its chest in a challenge.
+
+Your heart races, but there’s no time for hesitation. To survive this encounter, you 
+must rely on every ounce of skill and courage you possess. The battle for your life 
+has begun.
+"""
+troll_boss_victory = """
+With a final, thunderous crash, the Troll Warlord collapses to the ground, its massive 
+form shaking the very foundation of the dungeon. The echoes of its anguished roar fade, 
+leaving an eerie silence in their wake. You stand over the defeated beast, breathless 
+and battered, yet victorious. 
+
+The troll’s lifeless eyes stare into the void, its once-unyielding strength now reduced 
+to nothing. Among its remains, you notice a gleaming chest, hidden beneath the shadows. 
+The reward for your courage and skill awaits. 
+
+As you catch your breath, a sense of accomplishment fills you. Against all odds, you 
+have triumphed over the dungeon’s mighty guardian. But the Eternal Dungeon is far 
+from done with you. Deeper challenges and darker foes lie ahead, calling you forward.
+"""

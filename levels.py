@@ -12,12 +12,17 @@ def level_one(player, inventory):
     
     if choice == "1":
         mechanics.save_progress("dungeon_entrance")
+        mechanics.print_spacing()
         dungeon_entrance(player, inventory)
     else:
         print("Quiting level...")
         mechanics.sleep(1)
         print(mechanics.return_to_menu)
         return 0
+    
+def level_two(player, inventory):
+    mechanics.print_with_animation(story.level_2_intro)
+    trap_room(player, inventory)
 
 # Locked door
 def dungeon_entrance(player, inventory):
@@ -32,7 +37,8 @@ def dungeon_entrance(player, inventory):
         if dungeon_key == "Dungeon Key":
             mechanics.print_with_animation(story.dungeon_door_success)
             mechanics.save_progress("first_battle")
-            first_battle(player, inventory) # Continue story
+            mechanics.print_spacing()
+            battle_one(player, inventory) # Continue story
             return
         else:
             mechanics.print_with_animation(story.dungeon_door_failure)
@@ -46,7 +52,7 @@ def dungeon_entrance(player, inventory):
     
     
 # Bridge encounter where player has to cross a bridge
-def bridge_encounter(player):
+def bridge_encounter(player, inventory):
     print(story.bridge_encounter)
     mechanics.dialog_simple("Cross the bridge", "Try and swim")
     choice = input(mechanics.response)
@@ -117,3 +123,61 @@ def battle_one(player, inventory):
         print("\nIndecision grips you. Time waits for no one, and you press onward...")
         mechanics.save_progress("Level 2")
         return
+    
+# Level two trap room
+def trap_room(player, inventory):
+    print("You step into a dimly lit room filled with ancient, crumbling statues.")
+    print("The air is thick with dust, and the faint sound of grinding mechanisms fills your ears.")
+    mechanics.dialog_simple("Brave the traps", "Look for another way")
+
+    choice = input(mechanics.response)
+    if choice == "1":
+        print("\nYou make a dash for the door, but a sudden *crack* echoes through the room!")
+        print("The floor collapses beneath your feet, and you tumble into a dark chasm.")
+        player.health -= 10
+        mechanics.sleep(0.5)
+        print("You take 10 damage!")
+            
+        print("\nAs you gather yourself, you hear something stirring in the shadows...")
+        mechanics.dialog_simple("Challenge the creature!", "Try to sneak past")
+            
+        sub_choice = input(mechanics.response)
+        if sub_choice == "1":
+            print("\nYou steady yourself as a monstrous creature charges from the darkness!")
+            mechanics.battle(player, inventory)
+            print("After a fierce struggle, you emerge victorious and climb out of the chasm.")
+            mechanics.save_progress("level_two_boss")
+            return
+        elif sub_choice == "2":
+            print("\nYou press yourself against the wall and move cautiously past the beast.")
+            print("The creature lets out a low growl but doesn't give chase.")
+            print("You climb out of the chasm, shaken but unharmed.")
+            mechanics.save_progress("level_two_boss")
+            return
+        else:
+            mechanics.error("Invalid choice. The creature senses your hesitation and attacks!")
+            mechanics.battle(player, inventory)
+            print("You manage to fend off the creature and escape.")
+            mechanics.save_progress("level_two_boss")
+            return
+            
+    elif choice == "2":
+        print("\nYou carefully examine the room and find a hidden passage behind a crumbling statue.")
+        print("It leads you safely to the other side of the room, bypassing the traps.")
+        mechanics.save_progress("level_two_boss")
+        return
+    else:
+        mechanics.error("Invalid choice. Please choose a valid option.")
+        
+def level_two_boss(player, inventory):
+    mechanics.print_spacing
+    mechanics.print_with_animation(story.troll_boss_intro)
+    mechanics.battle(player, inventory)
+    mechanics.print_with_animation(story.troll_boss_victory)
+    mechanics.save_progress("Level 3")
+    return
+
+def level_three(player, inventory):
+    mechanics.print_spacing
+    
+    # TODO add dragon fight to end game

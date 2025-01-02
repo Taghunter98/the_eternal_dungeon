@@ -1,12 +1,14 @@
 {
     "Name": "Josh",
     "Class": "Warrior",
-    "Health": 100,
+    "Health": 95,
     "Base Health": 100,
+    "Base Damage": 10,
     "Stamina": 30,
     "Magic": 10,
     "Abilities": [
         "Shield Bash",
         "Battle Cry"
-    ]
+    ],
+    "Ability Damage": 15
 }
