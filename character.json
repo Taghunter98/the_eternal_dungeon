@@ -1,14 +1,14 @@
 {
     "Name": "Josh",
-    "Class": "Warrior",
-    "Health": 95,
-    "Base Health": 100,
+    "Class": "Cleric",
+    "Health": 60,
+    "Base Health": 70,
     "Base Damage": 10,
-    "Stamina": 30,
-    "Magic": 10,
+    "Stamina": 50,
+    "Magic": 80,
     "Abilities": [
-        "Shield Bash",
-        "Battle Cry"
+        "Heal",
+        "Divine Smite"
     ],
-    "Ability Damage": 15
+    "Ability Damage": 25
 }

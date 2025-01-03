@@ -1,21 +1,25 @@
 {
     "Gold": 0,
     "Weapons": [
-        "Greatsword"
+        "Staff",
+        "Sword"
     ],
     "Armour": [
-        "Chestplate",
-        "Helmet",
+        "Holy Hood",
+        "Holy Armour",
         "Gauntlets",
         "Greaves"
     ],
     "Potions": [
         {
-            "Healing": 0
+            "Healing": 1
+        },
+        {
+            "Magic": 2
         }
     ],
     "Quest Items": [
         "Dungeon Key",
-        "Warrior's Talisman"
+        "Mages's Talisman"
     ]
 }

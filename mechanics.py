@@ -304,7 +304,10 @@ def select_enemy():
         1: "Goblin",
         2: "Ork",
         3: "Skeleton",
-        4: "Troll"
+        4: "Troll",
+        5: "Warg",
+        6: "Armoured Ork",
+        7: "Shadow Knight"
     }
     
     save = load_progress()
@@ -315,6 +318,8 @@ def select_enemy():
         next_enemy = random.randint(1,3)
     elif save == "level_two_boss":
         next_enemy = 4
+    elif save == "Level 3":
+        next_enemy = random.randint(1,7)
     
     if next_enemy in enemies:
         print(enemies.get(next_enemy)) # debug

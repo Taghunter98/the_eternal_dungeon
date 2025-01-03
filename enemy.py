@@ -40,8 +40,11 @@ def enemy_check(entity):
     enemies = {
         "Goblin": enemy("Goblin", 30, 5, 10, 25),
         "Ork": enemy("Ork", 50, 10, 15, 50),
-        "Skeleton": enemy("Skeleton", 20, 5, 15, 25),
-        "Troll": enemy("Troll", 100, 15, 20, 150)
+        "Skeleton": enemy("Skeleton", 20, 5, 10, 25),
+        "Troll": enemy("Troll", 100, 15, 20, 150),
+        "Warg": enemy("Warg", 20, 15, 20, 50),
+        "Armoured Ork": enemy("Armoured Ork", 70, 15, 20, 100),
+        "Shadow Knight": enemy("Shadow Knight", 120, 20, 25, 200)
     }
     if entity in enemies:
         return enemies.get(entity)

@@ -35,8 +35,11 @@ def dungeon_entrance(player, inventory):
     if choice == "1":
         dungeon_key = character.player_inventory(player, inventory)  # Get the selected item
         if dungeon_key == "Dungeon Key":
+            mechanics.sleep(1)
+            mechanics.print_spacing()
             mechanics.print_with_animation(story.dungeon_door_success)
             mechanics.save_progress("first_battle")
+            mechanics.sleep(1)
             mechanics.print_spacing()
             battle_one(player, inventory) # Continue story
             return
@@ -89,6 +92,8 @@ def battle_one(player, inventory):
     mechanics.battle(player, inventory)
     mechanics.battle(player, inventory)
     mechanics.battle(player, inventory)
+    mechanics.sleep(1)
+    mechanics.print_spacing()
     mechanics.print_with_animation(story.battle_victory)
     
     # Post battle chest reward
@@ -179,5 +184,20 @@ def level_two_boss(player, inventory):
 
 def level_three(player, inventory):
     mechanics.print_spacing
+    mechanics.print_with_animation(story.level_3_intro)
+    bridge_encounter(player, inventory)
     
-    # TODO add dragon fight to end game
+
+def second_battle(player, inventory):
+    mechanics.print_with_animation(story.ancient_tomb_ambush)
+    mechanics.battle(player, inventory)
+    mechanics.battle(player, inventory)
+    mechanics.battle(player, inventory)
+    mechanics.battle(player, inventory)
+    mechanics.battle(player, inventory)
+    mechanics.print_with_animation(story.ancient_tomb_victory)
+    mechanics.save_game("final_boss")
+
+def final_boss(player, inventory):
+    print("WORK IN PROGRESS")
+    return

@@ -130,3 +130,58 @@ As you catch your breath, a sense of accomplishment fills you. Against all odds,
 have triumphed over the dungeon’s mighty guardian. But the Eternal Dungeon is far 
 from done with you. Deeper challenges and darker foes lie ahead, calling you forward.
 """
+
+level_3_intro = """
+The descent into the third level of the Eternal Dungeon feels like entering another 
+world entirely. The air is cold and heavy, each breath carrying the faint taste of ash. 
+The flicker of your torch barely penetrates the oppressive darkness, casting long, 
+twisting shadows across the walls. Strange, arcane symbols glow faintly on the floor, 
+their meaning lost to time but their power undeniable. 
+
+Every step forward is met with an unnerving silence, broken only by the distant sound 
+of something massive shifting in the void. The walls seem alive, whispering secrets 
+you cannot understand. This place is ancient, mysterious, and filled with a terrible 
+sense of foreboding. You know you are nearing the end.
+
+In the heart of this dark labyrinth lies the dungeon’s ultimate guardian—the Eternal 
+Dragon. A beast of unimaginable size and power, it slumbers amid the treasures and 
+secrets of ages past. This is what you’ve been preparing for, the final trial that will 
+determine your fate. 
+
+With your resolve hardened and your weapon ready, you press on. The shadows seem to 
+tighten their grip, but you will not falter. The third level awaits, and with it, your 
+greatest challenge yet.
+"""
+
+
+ancient_tomb_ambush = """
+The narrow passageway opens into a vast, ancient tomb, its walls lined with crumbling 
+statues and faded murals depicting long-forgotten battles. A faint, eerie glow emanates 
+from the cracked stone sarcophagi scattered throughout the room. The air here is thick 
+with the scent of decay and the weight of something unseen.
+
+As you take a cautious step forward, the silence is shattered by the grinding sound of 
+stone shifting. Five shadowy figures emerge from the darkness, their movements quick and 
+deliberate. Skeletal warriors, their hollow eyes glowing with an unnatural light, brandish 
+rusted weapons as they encircle you. 
+
+This is no chance encounter; it’s an ambush. Their relentless gazes fix on you, their 
+weapons raised in unison. There’s no time to think—only to fight. In this ancient tomb, 
+survival will demand every ounce of your strength and cunning.
+"""
+
+ancient_tomb_victory = """
+As the last skeletal warrior crumbles into a heap of bone and rusted armor, silence 
+once again fills the tomb. Your chest heaves with each breath, the echoes of the battle 
+still reverberating in your mind. The faint glow from the sarcophagi flickers and fades, 
+as if the ancient spirits themselves have been laid to rest. 
+
+You take a moment to steady yourself, your weapon still gripped tightly in your hand. 
+The room now feels eerily calm, as though the tomb acknowledges your victory. Among 
+the rubble, your sharp eyes catch sight of something glinting faintly—a small treasure 
+left behind by your vanquished foes. A reward for your resilience.
+
+The path forward is still shrouded in darkness, but with each battle you grow stronger. 
+You survived the ambush, and now the Eternal Dungeon beckons you deeper into its 
+mysterious depths.
+"""

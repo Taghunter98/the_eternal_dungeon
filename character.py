@@ -1,5 +1,6 @@
 import mechanics
 import the_eternal_dungeon
+import story
 
 # TODO
 # Add dexterity
@@ -39,7 +40,9 @@ class character:
     
     # creates name for character
     def create_name():
-        print("Greetings, traveler. You have journeyed far to reach these lands...")
+        mechanics.print_spacing()
+        mechanics.print_with_animation(story.title_card)
+        print("\nGreetings, traveler. You have journeyed far to reach these lands...")
         print("Tell me, what name shall echo in the annals of history?")
         name = input(mechanics.response)
         print(f"Ah, {name}... a name destined for greatness, or perhaps folly.")
@@ -140,7 +143,7 @@ def cleric_class(player):
     player.stamina = 50
     player.magic = 80
     player.ability_damage = 25
-    player.abilities = ["Heal", "Divine Smite"]
+    player.abilities = ["Burn Heritic", "Divine Smite"]
     
     # Update inventory
     inventory["Gold"] += 10
@@ -216,9 +219,9 @@ def player_inventory(player, inventory):
                 for potion in inventory["Potions"]:
                     if isinstance(potion, dict) and "Healing" in potion:
                         if potion["Healing"] > 0:
-                            player.base_health += 20
+                            player.health = player.base_health
                             potion["Healing"] -= 1
-                            print("You used a Healing Potion. Health restored by 20.")
+                            print(f"You used a Healing Potion. Health restored to {player.base_health}.")
                             mechanics.save_game(player, inventory)
                             break
                         else:
@@ -333,13 +336,13 @@ def display_character_sheet(player, inventory):
     for ability in player.abilities:
         print(f"- {ability}")
     print("+-------------------------------------------------+")
-    print("[1] Level Up   [2] Back to Menu\n                  ")
+    print(f"[1] Level Up   [2] Back to Menu\n                  ")
     character_sheet_options(player, inventory)
 
 def character_sheet_options(player, inventory):
     
     choice = input(mechanics.response)
-    gold_required = check_current_level() # Get gold level
+    gold_required = 100
     
     if choice == "1" and inventory["Gold"] >= gold_required:
         # Print message
@@ -348,9 +351,9 @@ def character_sheet_options(player, inventory):
         choice = input(mechanics.response)
         
         if choice == "1":  # Level up Health
-            player.health += 10
+            player.base_health += 10
             inventory["Gold"] -= gold_required
-            print(f"Your Health has increased to {player.health}!")
+            print(f"Your Health has increased to {player.base_health}!")
             mechanics.save_game(player, inventory)
             mechanics.sleep(1)
             print(mechanics.return_to_menu)
@@ -399,19 +402,10 @@ def character_sheet_options(player, inventory):
 
     else:
         print("Not enough gold to level up!")
+        print(f"You need {gold_required}...")
         mechanics.sleep(1)
         print(mechanics.return_to_menu)
         return
-
-def check_current_level():
-    if mechanics.load_progress == "Level 1":
-        return 20
-    elif mechanics.load_progress == "Level 2":
-        return 40
-    elif mechanics.load_progress == "Level 3":
-        return 60
-    else:
-        return 100 # default cost for higher levels for now
 
 # Check character health
 def check_health(player, inventory):

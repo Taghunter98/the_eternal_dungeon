@@ -18,8 +18,6 @@ class MainGame:
         save = MainGame.check_save()  
 
         if save == "Level 1":
-            # Start a new game
-            print("No save file found. Starting a new adventure!")
             player = character.character_creator()
             inventory = character.inventory
             mechanics.save_game(player, inventory)
@@ -99,7 +97,8 @@ class MainGame:
         "first_battle": levels.battle_one,
         "Level 2": levels.level_two,
         "level_two_boss": levels.level_two_boss,
-        "Level 3": levels.level_three
+        "Level 3": levels.level_three,
+        "final_boss": levels.final_boss
     }
     
     def continue_story(player, inventory, save):
